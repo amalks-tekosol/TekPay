@@ -35,7 +35,7 @@ namespace TekPay
             {
                 using (StreamWriter writer = new StreamWriter(logFilePath, true))
                 {
-                    writer.WriteLine();  
+                    writer.WriteLine();
                     writer.WriteLine(logEntry);
                 }
             }
