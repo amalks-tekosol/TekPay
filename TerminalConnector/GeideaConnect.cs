@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 using static TekPay.TekPay;
@@ -10,7 +11,17 @@ using static TekPay.TekPay;
 namespace TekPay
 {
     public class GeideaConnect
-    {
+    {   
+        //[DllImport("madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
+        [DllImport(@"madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern IntPtr api_RequestCOMTrxn(int port, int rate, int noParity, int dataBits, int stopBits, byte[] inOutBuff, byte[] intval, int trnxType, byte[] panNo, byte[] purAmount, byte[] stanNo, byte[] dataTime, byte[] expDate, byte[] trxRrn, byte[] authCode, byte[] rspCode, byte[] terminalId, byte[] schemeId, byte[] merchantId, byte[] addtlAmount, byte[] ecrrefno, byte[] version, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder outResp, byte[] outRespLen);
+
+        //[DllImport(@"madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall)]
+        //public static extern IntPtr api_CheckStatus(int port, int rate, int noParity, int dataBits, int stopBits, byte[] inOutBuff, byte[] intval, int trnxType, byte[] panNo, byte[] purAmount, byte[] stanNo, byte[] dataTime, byte[] expDate, byte[] trxRrn, byte[] authCode, byte[] rspCode, byte[] terminalId, byte[] schemeId, byte[] merchantId, byte[] addtlAmount, byte[] ecrrefno, byte[] version, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder outResp, byte[] outRespLen);
+
+        [DllImport(@"madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall)]
+        private static extern int api_CheckStatus(int port, int rate, int noParity, int dataBits, int stopBits, byte[] inOutBuff, byte[] intval);
+
         public async Task<string> GeideaTrn(RequestModel data)
         {
             string working_method = "sync";

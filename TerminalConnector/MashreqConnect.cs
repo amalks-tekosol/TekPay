@@ -316,8 +316,22 @@ namespace TekPay
         private string createResult()
         {
             ResponseModel responseData = new ResponseModel();
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.LoadXml(mashreqResultData);
+
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(mashreqResultData);
+
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit, // ⛔ Block DTDs
+                XmlResolver = null                       // ⛔ Block external entities
+            };
+
+            using (var stringReader = new StringReader(mashreqResultData))
+            using (var xmlReader = XmlReader.Create(stringReader, settings))
+            {
+                xmlDoc.Load(xmlReader);
+            }
 
             string jsonString = JsonConvert.SerializeXmlNode(xmlDoc, Newtonsoft.Json.Formatting.Indented);
 

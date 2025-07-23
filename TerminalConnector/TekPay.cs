@@ -62,16 +62,7 @@ namespace TekPay
         public event Action<int> OnPurchaseCompleted;
 
         EazyPayConnect eazyPayConnect = new EazyPayConnect();
-        //[DllImport("madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall, CharSet = CharSet.Ansi)]
-        [DllImport(@"madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern IntPtr api_RequestCOMTrxn(int port, int rate, int noParity, int dataBits, int stopBits, byte[] inOutBuff, byte[] intval, int trnxType, byte[] panNo, byte[] purAmount, byte[] stanNo, byte[] dataTime, byte[] expDate, byte[] trxRrn, byte[] authCode, byte[] rspCode, byte[] terminalId, byte[] schemeId, byte[] merchantId, byte[] addtlAmount, byte[] ecrrefno, byte[] version, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder outResp, byte[] outRespLen);
-
-        //[DllImport(@"madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall)]
-        //public static extern IntPtr api_CheckStatus(int port, int rate, int noParity, int dataBits, int stopBits, byte[] inOutBuff, byte[] intval, int trnxType, byte[] panNo, byte[] purAmount, byte[] stanNo, byte[] dataTime, byte[] expDate, byte[] trxRrn, byte[] authCode, byte[] rspCode, byte[] terminalId, byte[] schemeId, byte[] merchantId, byte[] addtlAmount, byte[] ecrrefno, byte[] version, [MarshalAs(UnmanagedType.LPWStr)] StringBuilder outResp, byte[] outRespLen);
-
-        [DllImport(@"madaapi_v1_9.dll", CallingConvention = CallingConvention.StdCall)]
-        public static extern int api_CheckStatus(int port, int rate, int noParity, int dataBits, int stopBits, byte[] inOutBuff, byte[] intval);
-
+        
 
         public async Task<string> DoTransaction(string jsonData, string token)
         //public async Task<string> DoTransaction(string jsonData, Action<string> callback, string token)
@@ -1078,8 +1069,23 @@ namespace TekPay
 
                     try
                     {
+                        //XmlDocument xmlDoc = new XmlDocument();
+                        //xmlDoc.LoadXml(xml); // This will throw an exception if the XML is invalid
+
+
                         XmlDocument xmlDoc = new XmlDocument();
-                        xmlDoc.LoadXml(xml); // This will throw an exception if the XML is invalid
+
+                        var settings = new XmlReaderSettings
+                        {
+                            DtdProcessing = DtdProcessing.Prohibit, // ⛔ Block DTDs
+                            XmlResolver = null                       // ⛔ Block external entities
+                        };
+
+                        using (var stringReader = new StringReader(xml))
+                        using (var xmlReader = XmlReader.Create(stringReader, settings))
+                        {
+                            xmlDoc.Load(xmlReader);
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -1431,8 +1437,22 @@ namespace TekPay
         private string createResult()
         {
             ResponseModel responseData = new ResponseModel();
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.LoadXml(mashreqResultData);
+
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(mashreqResultData);
+
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit, // ⛔ Block DTDs
+                XmlResolver = null                       // ⛔ Block external entities
+            };
+
+            using (var stringReader = new StringReader(mashreqResultData))
+            using (var xmlReader = XmlReader.Create(stringReader, settings))
+            {
+                xmlDoc.Load(xmlReader);
+            }
 
             string jsonString = JsonConvert.SerializeXmlNode(xmlDoc, Newtonsoft.Json.Formatting.Indented);
 
@@ -1681,8 +1701,22 @@ namespace TekPay
 
         private bool IsFinalMessage(string xmlData)
         {
+            //XmlDocument xmlDoc = new XmlDocument();
+            //xmlDoc.LoadXml(xmlData);
+
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.LoadXml(xmlData);
+
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit, // ⛔ Block DTDs
+                XmlResolver = null                       // ⛔ Block external entities
+            };
+
+            using (var stringReader = new StringReader(xmlData))
+            using (var xmlReader = XmlReader.Create(stringReader, settings))
+            {
+                xmlDoc.Load(xmlReader);
+            }
 
             XmlNode errorCodeNode = xmlDoc.SelectSingleNode("//ErrorCode");
 

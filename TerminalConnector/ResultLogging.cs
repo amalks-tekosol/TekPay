@@ -31,6 +31,7 @@ namespace TekPay
             }
             catch (Exception ex)
             {
+                string error = ex.Message;
             }
         }
     }
