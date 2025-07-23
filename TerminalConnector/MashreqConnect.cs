@@ -234,7 +234,7 @@ namespace TekPay
             }
             catch (Exception ex)
             {
-
+                Log("Error in the transaction : "+ex.Message);
             }
             Log("STEP : RETURNING");
             #endregion
@@ -262,8 +262,22 @@ namespace TekPay
 
             //OnMessageReceived?.Invoke(DateTime.Now.ToString("hh:mm:ss tt") + " - " + e.XmlData);
 
+            //XmlDocument doc = new XmlDocument();
+            //doc.LoadXml(mashreqResultData);
+
             XmlDocument doc = new XmlDocument();
-            doc.LoadXml(mashreqResultData);
+
+            var settings = new XmlReaderSettings
+            {
+                DtdProcessing = DtdProcessing.Prohibit, // ⛔ Block DTDs
+                XmlResolver = null                       // ⛔ Block external entities
+            };
+
+            using (var stringReader = new StringReader(mashreqResultData))
+            using (var xmlReader = XmlReader.Create(stringReader, settings))
+            {
+                doc.Load(xmlReader);
+            }
 
             string resultValue = string.Empty;
             string resultDes = string.Empty;
