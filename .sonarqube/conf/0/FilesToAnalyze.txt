@@ -1,0 +1,16 @@
+﻿C:\Amal\Projects\TerminalConnector\TerminalConnector\EazyPayConnect.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\EazyPayResponse.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\GeideaConnect.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\GeideaResponseData.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\JwtValidator.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\LogClass.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\MashreqConnect.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\MashreqErrorData.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\Properties\AssemblyInfo.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\RequestModel.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\ResponseModel.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\ResultLogging.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\System\Text\Json.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\TekPay.cs
+C:\Amal\Projects\TerminalConnector\TerminalConnector\Properties\PublishProfiles\FolderProfile.pubxml
+C:\Amal\Projects\TerminalConnector\TerminalConnector\Properties\TerminalConnectorKey.snk
